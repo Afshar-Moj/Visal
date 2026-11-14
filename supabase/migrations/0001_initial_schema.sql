@@ -19,12 +19,31 @@ create table if not exists public.profiles (
 create table if not exists public.private_user_data (
   user_id uuid primary key references auth.users(id) on delete cascade,
   birth_date date not null,
-  created_at timestamptz not null default now(),
-  constraint birth_date_is_adult check (
-    birth_date <= (current_date - interval '18 years')::date
-    and birth_date >= date '1900-01-01'
-  )
+  created_at timestamptz not null default now()
 );
+
+
+-- Use a trigger rather than a CHECK constraint because the age threshold
+-- depends on the current date.
+create or replace function public.validate_birth_date()
+returns trigger
+language plpgsql
+set search_path = ''
+as $function$
+begin
+  if new.birth_date > (current_date - interval '18 years')::date
+     or new.birth_date < date '1900-01-01' then
+    raise exception 'Registration is limited to people aged 18 or older.'
+      using errcode = '23514';
+  end if;
+  return new;
+end;
+$function$;
+
+drop trigger if exists private_user_data_validate_birth_date on public.private_user_data;
+create trigger private_user_data_validate_birth_date
+before insert or update of birth_date on public.private_user_data
+for each row execute function public.validate_birth_date();
 
 create table if not exists public.user_blocks (
   blocker_id uuid not null references auth.users(id) on delete cascade,
@@ -98,6 +117,7 @@ language sql
 stable
 security definer
 set search_path = ''
+set row_security = off
 as $function$
   select exists (
     select 1 from public.user_blocks b
@@ -122,7 +142,10 @@ using (
 drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own"
 on public.profiles for insert to authenticated
-with check (user_id = (select auth.uid()));
+with check (
+  user_id = (select auth.uid())
+  and exists (select 1 from public.private_user_data d where d.user_id = (select auth.uid()))
+);
 
 drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
