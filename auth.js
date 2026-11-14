@@ -85,6 +85,8 @@ logoutButton.addEventListener("click", async () => {
   }
 });
 
+setMode("signup");
+
 if (!config.url || !config.anonKey) {
   showMessage("اتصال پایگاه داده هنوز تنظیم نشده است. پس از ساخت پروژهٔ Supabase، نشانی پروژه و کلید عمومی را در فایل supabase-config.js وارد کنید.", "warning");
   submitButton.disabled = true;
@@ -163,4 +165,3 @@ form.addEventListener("submit", async event => {
   }
 });
 
-setMode("signup");
