@@ -46,10 +46,61 @@
       <div class="value-list"><article><b>۱</b><div><h3>رایگان می‌ماند</h3><p>ثبت‌نام، جست‌وجو و پیام‌دادن از قابلیت‌های پایه و رایگان وصال‌اند.</p></div></article><article><b>۲</b><div><h3>حریم خصوصی مهم است</h3><p>اطلاعات کاربران فروخته نمی‌شود؛ داده‌ها باید فقط به اندازهٔ نیاز سرویس استفاده شوند.</p></div></article><article><b>۳</b><div><h3>احترام و امنیت</h3><p>گزارش و مسدودسازی و رسیدگی به تخلف، بخش جدایی‌ناپذیر محصول خواهد بود.</p></div></article></div>
     </section>
 
-    <section class="join section" id="join"><div><span class="eyebrow">به‌زودی</span><h2>وصال هنوز در حال ساخته‌شدن است.</h2><p>این صفحه یک نمونهٔ اولیه است. ثبت‌نام و پیام‌رسانی واقعی تا آماده‌شدن زیرساخت امن فعال نیست.</p></div><span class="join-symbol">و</span></section>
+    <section class="join section" id="join">
+    <div class="join-intro"><span class="eyebrow">عضویت رایگان</span><h2>به وصال خوش آمدی.</h2><p>برای ساخت حساب، ایمیل و اطلاعات اولیه‌ات را وارد کن. ثبت‌نام فقط برای افراد ۱۸ سال به بالا است.</p></div>
+    <div class="auth-panel">
+      <div class="auth-tabs" role="group" aria-label="نوع دسترسی">
+        <button type="button" class="selected" data-auth-mode="signup" aria-pressed="true">ثبت‌نام</button>
+        <button type="button" data-auth-mode="login" aria-pressed="false">ورود</button>
+      </div>
+      <p id="auth-status" class="auth-status" aria-live="polite">هنوز وارد حساب نشده‌ای.</p>
+      <form id="auth-form">
+        <div class="form-grid">
+          <label class="form-field">ایمیل
+            <input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com">
+          </label>
+          <label class="form-field">گذرواژه
+            <input name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="72" placeholder="حداقل ۱۰ نویسه">
+          </label>
+          <label class="form-field" data-registration-field>تکرار گذرواژه
+            <input id="password-confirm" name="password_confirm" type="password" autocomplete="new-password" required minlength="10" maxlength="72">
+          </label>
+          <label class="form-field" data-registration-field>نام نمایشی
+            <input name="display_name" type="text" required maxlength="40" autocomplete="nickname" placeholder="نامی که دیگران می‌بینند">
+          </label>
+          <label class="form-field" data-registration-field>شهر
+            <input name="city" type="text" required maxlength="80" autocomplete="address-level2" placeholder="مثلاً تهران">
+          </label>
+          <label class="form-field" data-registration-field>جنسیت <span class="optional-label">اختیاری</span>
+            <select name="gender" data-optional="true">
+              <option value="">ترجیح می‌دهم نگویم</option>
+              <option value="woman">زن</option>
+              <option value="man">مرد</option>
+              <option value="other">گزینهٔ دیگر</option>
+              <option value="prefer_not_to_say">بدون پاسخ</option>
+            </select>
+          </label>
+          <label class="form-field" data-registration-field>تاریخ تولد
+            <input name="birth_date" type="date" required autocomplete="bday">
+          </label>
+          <label class="form-field full-field" data-registration-field>معرفی کوتاه <span class="optional-label">اختیاری</span>
+            <textarea name="bio" rows="3" maxlength="500" data-optional="true" placeholder="کمی از خودت و علاقه‌مندی‌هایت بنویس…"></textarea>
+          </label>
+        </div>
+        <label class="rules-check" data-registration-field>
+          <input id="accept-rules" type="checkbox" required>
+          <span>تأیید می‌کنم ۱۸ سال یا بیشتر دارم و با <a href="rules.html">قوانین استفاده</a> و <a href="privacy.html">سیاست حریم خصوصی</a> موافقم.</span>
+        </label>
+        <button id="auth-submit" class="auth-submit" type="submit">ساخت حساب رایگان</button>
+      </form>
+      <button id="logout-button" class="reset-button logout-button" type="button" hidden>خروج از حساب</button>
+      <p id="auth-message" class="auth-message" role="status" aria-live="polite" hidden></p>
+      <p class="auth-footnote">اطلاعات تاریخ تولد خصوصی نگه داشته می‌شود و در پروفایل عمومی نمایش داده نمی‌شود.</p>
+    </div>
+  </section>
   </main>
 
   <footer><a class="brand" href="#"><span class="brand-mark">و</span><span>وصال</span></a><span>ساخته‌شده با احترام به انتخاب و حریم خصوصی آدم‌ها</span><span>© وصال</span></footer>
-  <script src="app.js"></script>
+  <script src="supabase-config.js"></script>\n  <script src="app.js"></script>\n  <script type="module" src="auth.js"></script>
 </body>
 </html>
