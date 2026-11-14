@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="وصال؛ فضایی برای آشنایی و ارتباط محترمانه">
+  <title>وصال | آشنایی و ارتباط</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="صفحه اصلی وصال"><span class="brand-mark">و</span><span>وصال</span></a>
+    <nav aria-label="ناوبری اصلی"><a class="active" href="#discover">کشف افراد</a><a href="#about">درباره وصال</a></nav>
+    <a class="login-link" href="#join">ورود / ثبت‌نام</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">آشنایی، بی‌واسطه و بی‌هزینه</span>
+        <h1>گاهی یک آشنایی،<br><em>شروع یک مسیر تازه است.</em></h1>
+        <p>وصال فضایی برای آشنایی محترمانه و گفت‌وگوی واقعی است؛ بدون هزینه برای دیدن و پیام‌دادن.</p>
+        <a class="primary-button" href="#discover">دیدن کاربران</a>
+        <p class="small-note">ویژه افراد بالای ۱۸ سال · شروع فعالیت با تمرکز بر ایران</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="spark">✳</div><div class="art-caption">ارتباطی ساده، انسانی و امن</div></div>
+    </section>
+
+    <section class="discover section" id="discover">
+      <div class="section-heading"><div><span class="eyebrow">آدم‌ها، فراتر از یک تصویر</span><h2>برای آشنایی، از کجا شروع کنیم؟</h2></div><span class="demo-tag">نمایش آزمایشی</span></div>
+      <div class="filters" aria-label="فیلتر کاربران">
+        <label>شهر<select id="city-filter"><option value="">همه شهرها</option><option>تهران</option><option>شیراز</option><option>اصفهان</option><option>رشت</option><option>تبریز</option></select></label>
+        <label>نمایش<select id="gender-filter"><option value="">همه</option><option value="زن">خانم‌ها</option><option value="مرد">آقایان</option></select></label>
+        <label class="search-field">جست‌وجو<input id="search-input" type="search" placeholder="نام یا علاقه‌مندی..."></label>
+        <button id="reset-filters" class="reset-button" type="button">پاک‌کردن فیلترها</button>
+      </div>
+      <div class="results-line"><span id="result-count" aria-live="polite">۳ پروفایل نمونه</span><span>همهٔ پروفایل‌ها ساختگی و آزمایشی‌اند</span></div>
+      <div class="profile-grid" id="profile-grid"></div>
+      <p class="empty-state" id="empty-state" hidden>با این فیلترها موردی پیدا نشد. فیلترها را تغییر بده.</p>
+    </section>
+
+    <section class="values section" id="about">
+      <div><span class="eyebrow">قرار ما با شما</span><h2>ارتباط، نباید پشت درِ پرداخت بماند.</h2></div>
+      <div class="value-list"><article><b>۱</b><div><h3>رایگان می‌ماند</h3><p>ثبت‌نام، جست‌وجو و پیام‌دادن از قابلیت‌های پایه و رایگان وصال‌اند.</p></div></article><article><b>۲</b><div><h3>حریم خصوصی مهم است</h3><p>اطلاعات کاربران فروخته نمی‌شود؛ داده‌ها باید فقط به اندازهٔ نیاز سرویس استفاده شوند.</p></div></article><article><b>۳</b><div><h3>احترام و امنیت</h3><p>گزارش و مسدودسازی و رسیدگی به تخلف، بخش جدایی‌ناپذیر محصول خواهد بود.</p></div></article></div>
+    </section>
+
+    <section class="join section" id="join"><div><span class="eyebrow">به‌زودی</span><h2>وصال هنوز در حال ساخته‌شدن است.</h2><p>این صفحه یک نمونهٔ اولیه است. ثبت‌نام و پیام‌رسانی واقعی تا آماده‌شدن زیرساخت امن فعال نیست.</p></div><span class="join-symbol">و</span></section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">و</span><span>وصال</span></a><span>ساخته‌شده با احترام به انتخاب و حریم خصوصی آدم‌ها</span><span>© وصال</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
