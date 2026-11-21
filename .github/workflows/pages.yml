@@ -1,8 +1,8 @@
 name: Publish Visal website
 
+# Publishing is intentionally manual until the owner enables GitHub Pages
+# and approves public release of the unfinished product.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
