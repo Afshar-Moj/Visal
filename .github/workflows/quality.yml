@@ -1,0 +1,23 @@
+name: Validate Visal project
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --input-type=module --check < auth.js
+      - name: Check project files and security guardrails
+        run: node scripts/check-project.mjs
