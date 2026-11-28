@@ -51,7 +51,7 @@ function setMode(nextMode) {
 }
 
 function getAge(birthDate) {
-  if (typeof birthDate !== "string" || !/^\\d{4}-\\d{2}-\\d{2}$/.test(birthDate)) {
+  if (typeof birthDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
     return null;
   }
 
