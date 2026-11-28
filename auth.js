@@ -6,6 +6,7 @@ const message = document.querySelector("#auth-message");
 const modeButtons = [...document.querySelectorAll("[data-auth-mode]")];
 const registrationFields = [...document.querySelectorAll("[data-registration-field]")];
 const passwordConfirm = document.querySelector("#password-confirm");
+const passwordInput = form.querySelector('[name="password"]');
 const submitButton = document.querySelector("#auth-submit");
 const authStatus = document.querySelector("#auth-status");
 const logoutButton = document.querySelector("#logout-button");
@@ -17,7 +18,8 @@ const messages = {
   "Invalid login credentials": "ایمیل یا گذرواژه درست نیست.",
   "Email not confirmed": "ابتدا ایمیلت را تأیید کن و سپس وارد شو.",
   "User already registered": "این ایمیل قبلاً ثبت‌نام کرده است؛ وارد شو.",
-  "Password should be at least 6 characters": "گذرواژه کوتاه است؛ حداقل ۱۰ نویسه انتخاب کن."
+  "Password should be at least 6 characters": "گذرواژه کوتاه است؛ حداقل ۱۰ نویسه انتخاب کن.",
+  "Password should be at least 10 characters": "گذرواژه کوتاه است؛ حداقل ۱۰ نویسه انتخاب کن."
 };
 
 function showMessage(text, type = "info") {
@@ -41,6 +43,7 @@ function setMode(nextMode) {
     });
   });
 
+  passwordInput.autocomplete = mode === "login" ? "current-password" : "new-password";
   passwordConfirm.required = mode === "signup";
   passwordConfirm.closest(".form-field").hidden = mode === "login";
   submitButton.textContent = mode === "signup" ? "ساخت حساب رایگان" : "ورود به وصال";
@@ -48,12 +51,20 @@ function setMode(nextMode) {
 }
 
 function getAge(birthDate) {
+  if (typeof birthDate !== "string" || !/^\\d{4}-\\d{2}-\\d{2}$/.test(birthDate)) {
+    return null;
+  }
+
+  const date = new Date(`${birthDate}T00:00:00Z`);
+  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== birthDate) {
+    return null;
+  }
+
   const today = new Date();
-  const date = new Date(`${birthDate}T00:00:00`);
-  let age = today.getFullYear() - date.getFullYear();
+  let age = today.getFullYear() - date.getUTCFullYear();
   const beforeBirthday =
-    today.getMonth() < date.getMonth() ||
-    (today.getMonth() === date.getMonth() && today.getDate() < date.getDate());
+    today.getMonth() < date.getUTCMonth() ||
+    (today.getMonth() === date.getUTCMonth() && today.getDate() < date.getUTCDate());
   if (beforeBirthday) age--;
   return age;
 }
@@ -110,7 +121,13 @@ form.addEventListener("submit", async event => {
 
   if (mode === "signup") {
     const birthDate = String(data.get("birth_date"));
-    if (getAge(birthDate) < 18) {
+    const age = getAge(birthDate);
+
+    if (age === null) {
+      showMessage("تاریخ تولد معتبر وارد کن.", "error");
+      return;
+    }
+    if (age < 18) {
       showMessage("ثبت‌نام در وصال فقط برای افراد ۱۸ سال به بالا امکان‌پذیر است.", "error");
       return;
     }
@@ -164,4 +181,3 @@ form.addEventListener("submit", async event => {
     submitButton.textContent = mode === "signup" ? "ساخت حساب رایگان" : "ورود به وصال";
   }
 });
-
