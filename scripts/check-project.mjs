@@ -39,6 +39,7 @@ for (const table of ["profiles", "private_user_data", "user_blocks", "conversati
 
 assert.match(migration1, /create table if not exists public\.private_user_data/i, "Private birth-date table is missing.");
 assert.match(migration1, /create trigger private_user_data_validate_birth_date/i, "Database-side age validation is missing.");
+assert.match(migration1, /new\\.birth_date\\s*>\\s*\\(current_date\\s*-\\s*interval\\s+'18 years'\\)::date/i, "The database must reject anyone younger than 18.");
 assert.match(migration2, /after insert on auth\.users/i, "Signup profile trigger is missing.");
 assert.match(migration3, /create schema if not exists private/i, "Private schema for block checks is missing.");
 assert.doesNotMatch(migration3, /create or replace function public\.is_blocked_pair/i, "Block helper must not be recreated in the public API schema.");
