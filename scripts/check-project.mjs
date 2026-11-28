@@ -28,8 +28,10 @@ assert.match(html, /name="robots" content="noindex, nofollow"/i, "The unfinished
 assert.match(html, /name="birth_date"/, "Signup must collect a date of birth.");
 assert.match(auth, /signUp\(/, "Signup flow is missing.");
 assert.match(auth, /signInWithPassword\(/, "Login flow is missing.");
-assert.match(auth, /getAge\(birthDate\)\s*<\s*18/, "Client-side 18+ check is missing.");
+assert.match(auth, /const age = getAge\(birthDate\);[\s\S]*?if \(age < 18\)/, "Client-side 18+ check is missing.");
 assert.match(auth, /birth_date:\s*String\(data\.get\("birth_date"\)\)/, "Birth date must be sent to the signup trigger.");
+assert.match(auth, /if \(age === null\)/, "Invalid birth dates must be rejected before signup.");
+assert.match(auth, /date\.toISOString\(\)\.slice\(0, 10\) !== birthDate/, "Impossible calendar dates must be rejected.");
 assert.match(app, /پروفایل نمونه/, "Demo profiles must be clearly labelled.");
 assert.doesNotMatch(config, /(?:service_role|secret[_-]?key)\s*:/i, "A server secret must never be configured in browser code.");
 
@@ -39,7 +41,7 @@ for (const table of ["profiles", "private_user_data", "user_blocks", "conversati
 
 assert.match(migration1, /create table if not exists public\.private_user_data/i, "Private birth-date table is missing.");
 assert.match(migration1, /create trigger private_user_data_validate_birth_date/i, "Database-side age validation is missing.");
-assert.match(migration1, /new\\.birth_date\\s*>\\s*\\(current_date\\s*-\\s*interval\\s+'18 years'\\)::date/i, "The database must reject anyone younger than 18.");
+assert.ok(migration1.includes("new.birth_date > (current_date - interval '18 years')::date"), "The database must reject anyone younger than 18.");
 assert.match(migration2, /after insert on auth\.users/i, "Signup profile trigger is missing.");
 assert.match(migration3, /create schema if not exists private/i, "Private schema for block checks is missing.");
 assert.doesNotMatch(migration3, /create or replace function public\.is_blocked_pair/i, "Block helper must not be recreated in the public API schema.");
